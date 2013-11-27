@@ -12,6 +12,7 @@ import java.util.Map;
 import org.json.*;
 
 public class Parser {
+<<<<<<< HEAD
 	List<Map<String, String>> eventList = new ArrayList();;
 	
 	public void test() {
