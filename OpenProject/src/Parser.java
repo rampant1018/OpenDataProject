@@ -29,6 +29,20 @@ public class Parser {
 		}
 	}
 	
+	public void test(String content) {
+		try {
+			getEventList(content);
+			
+			for(int i = 0; i < eventList.size(); i++) {
+				System.out.println("震度： " + eventList.get(i).get("mag") + ", 地點： " + eventList.get(i).get("location") + ", 時間： " + eventList.get(i).get("time") + ", 經度： " + eventList.get(i).get("longitude") + ", 緯度： " + eventList.get(i).get("latitude"));
+			}
+			
+		} catch (IOException | JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	private String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return encoding.decode(ByteBuffer.wrap(encoded)).toString();
