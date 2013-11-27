@@ -14,6 +14,10 @@ import org.json.*;
 public class Parser {
 	List<Map<String, String>> eventList = new ArrayList();;
 	
+	// Parser test function
+	// Used for testing readFile function which can read json content from given file
+	// And call getEventList function to parse json content
+	// Display all event details: mag, location, time, longitude, latitude
 	public void test() {
 		try {
 			String content = readFile("testfile/query", StandardCharsets.UTF_8);
@@ -29,6 +33,10 @@ public class Parser {
 		}
 	}
 	
+	// Parser test function
+	// Liked upper test function, but use given json string instead read from testfile
+	// And call getEventList function to parse json content
+	// Display all event details: mag, location, time, longitude, latitude
 	public void test(String content) {
 		try {
 			getEventList(content);
@@ -43,11 +51,13 @@ public class Parser {
 		}
 	}
 	
+	// Read json content from testfile
 	public String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return encoding.decode(ByteBuffer.wrap(encoded)).toString();
 	}
 	
+	// parse json content to get event detail
 	private void getEventList(String content) throws JSONException {
 		JSONObject jsonObj = new JSONObject(new JSONTokener(content));
 		JSONArray eventArray = jsonObj.getJSONArray("features");
