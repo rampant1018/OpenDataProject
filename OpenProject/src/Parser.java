@@ -16,7 +16,7 @@ public class Parser {
 	
 	public void test() {
 		try {
-			String content = readFile("testfile/query.txt", StandardCharsets.UTF_8);
+			String content = readFile("testfile/query", StandardCharsets.UTF_8);
 			getEventList(content);
 			
 			for(int i = 0; i < eventList.size(); i++) {
@@ -43,7 +43,7 @@ public class Parser {
 		}
 	}
 	
-	private String readFile(String path, Charset encoding) throws IOException {
+	public String readFile(String path, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return encoding.decode(ByteBuffer.wrap(encoded)).toString();
 	}
