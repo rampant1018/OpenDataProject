@@ -1,0 +1,30 @@
+
+public class Main {
+
+<<<<<<< HEAD
+	/**
+	 * @param args
+	 * @throws Exception 
+	 */
+	public static void main(String[] args) throws Exception {
+		// TODO Auto-generated method stub
+		//Parser parser = new Parser();
+		//parser.test();
+	}
+	
+	
+}
+=======
+        /**
+         * @param args
+         */
+        public static void main(String[] args) {
+                // TODO Auto-generated method stub
+                Parser parser = new Parser();
+                Fetch fetch = new Fetch();
+                parser.test(fetch.getJson("2012-09-05", "2012-09-06"));
+        }
+        
+        
+}
+>>>>>>> 67197233e00b703d7f48c179136f3befc30e4c06
