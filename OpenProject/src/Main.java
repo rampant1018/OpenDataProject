@@ -7,7 +7,8 @@ public class Main {
         public static void main(String[] args) {
                 // TODO Auto-generated method stub
                 Parser parser = new Parser();
-                parser.test();
+                Fetch fetch = new Fetch();
+                parser.test(fetch.getJson("2012-09-05", "2012-09-06"));
         }
         
         

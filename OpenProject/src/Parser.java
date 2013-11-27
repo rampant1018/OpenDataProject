@@ -16,7 +16,7 @@ public class Parser {
         
         public void test() {
                 try {
-                        String content = readFile("testfile/query.txt", StandardCharsets.UTF_8);
+                        String content = readFile("testfile/URL1.txt", StandardCharsets.UTF_8);
                         getEventList(content);
                         
                         for(int i = 0; i < eventList.size(); i++) {
