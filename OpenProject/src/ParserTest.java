@@ -13,7 +13,7 @@ import org.junit.Test;
 
 
 public class ParserTest {
-	private Parser parser;
+	Parser parser;
 	
 	@Before
 	public void setUp() throws Exception {
