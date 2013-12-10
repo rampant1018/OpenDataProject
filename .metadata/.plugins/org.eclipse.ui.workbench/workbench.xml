@@ -45,13 +45,13 @@
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/OpenProject/src/Parser.java"/>
 <editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="3247" selectionTopPixel="913"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ParserTest.java" partName="ParserTest.java" path="/home/rampant/Workspace/OpenDataProject/OpenProject/src/ParserTest.java" title="ParserTest.java" tooltip="OpenProject/src/ParserTest.java" workbook="DefaultEditorWorkbook">
+<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="ParserTest.java" partName="ParserTest.java" path="/home/rampant/Workspace/OpenDataProject/OpenProject/src/ParserTest.java" title="ParserTest.java" tooltip="OpenProject/src/ParserTest.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/OpenProject/src/ParserTest.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="12" selectionOffset="511" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="523" selectionTopPixel="0"/>
 </editor>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Main.java" partName="Main.java" path="/home/rampant/Workspace/OpenDataProject/OpenProject/src/Main.java" title="Main.java" tooltip="OpenProject/src/Main.java" workbook="DefaultEditorWorkbook">
+<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="Main.java" partName="Main.java" path="/home/rampant/Workspace/OpenDataProject/OpenProject/src/Main.java" title="Main.java" tooltip="OpenProject/src/Main.java" workbook="DefaultEditorWorkbook">
 <input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/OpenProject/src/Main.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="386" selectionTopPixel="0"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="289" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
@@ -63,9 +63,6 @@
 </view>
 <view id="org.eclipse.ui.console.ConsoleView" partName="Console">
 <viewState/>
-</view>
-<view id="org.eclipse.pde.runtime.LogView" partName="Error Log">
-<viewState activate="true" allSessions="true" column2="414" column3="150" column4="523" error="true" groupBy="0" info="true" limit="50" ok="true" orderType="2" orderValue="-1" show_filter_text="true" useLimit="true" warning="true"/>
 </view>
 <view id="org.eclipse.ui.views.TaskList" partName="Tasks">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.completionField" categoryGroup="none" markerContentGenerator="org.eclipse.ui.ide.tasksGenerator" partName="Tasks">
@@ -119,7 +116,6 @@
 <view id="org.eclipse.ui.views.TaskList"/>
 <view id="org.eclipse.jdt.junit.ResultView"/>
 <view id="org.eclipse.ui.console.ConsoleView"/>
-<view id="org.eclipse.pde.runtime.LogView"/>
 <fastViewBars/>
 <layout>
 <mainWindow>
@@ -148,13 +144,12 @@
 <page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="JUnit"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
-<page content="org.eclipse.pde.runtime.LogView" label="Error Log"/>
+<page content="org.eclipse.pde.runtime.LogView" label="LabelNotFound"/>
 <page content="org.eclipse.team.ui.GenericHistoryView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
 <part id="2"/>
-<part id="3"/>
 </presentation>
 </folder>
 </info>
@@ -183,6 +178,7 @@
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/OpenProject/src/Main.java"/>
 <editor factoryID="org.eclipse.ui.ide.FileStoreEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" uri="file:/home/rampant/Workspace/OpenDataProject/.metadata/.log"/>
 <editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/OpenProject/src/ParserTest.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/OpenProject/src/Main.java"/>
 </editors>
 <item historyLabel="Fetch.java" index="0">
 <position info="not_deleted" x="0" y="0"/>
@@ -259,8 +255,11 @@
 <item historyLabel="Main.java" index="6">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item active="true" historyLabel="ParserTest.java" index="8">
+<item historyLabel="ParserTest.java" index="8">
 <position info="not_deleted" x="511" y="12"/>
+</item>
+<item active="true" historyLabel="Main.java" index="9">
+<position info="not_deleted" x="288" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
