@@ -1,0 +1,77 @@
+<project name="OpenProject" basedir="." default="main">
+    <property name="src.dir"            value="src/"/>
+    <property name="lib.dir"            value="lib/"/>
+    <property name="build.dir"          value="build"/>
+    <property name="reports.dir"        value="${build.dir}/reports"/>
+    <property name="reports.raw.dir"    value="${reports.dir}/raw"/>
+    <property name="reports.html.dir"   value="${reports.dir}/html"/>
+    <property name="classes.dir"        value="${build.dir}/classes"/>
+    <property name="jar.dir"            value="${build.dir}/jar"/>
+    <property name="main-class"         value="OPEarth.Main"/>
+
+    <path id="classpath">
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+    </path>
+
+    <target name="init">
+        <!-- Create the build directory structure used by compile and junit testing -->
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${reports.dir}"/>
+        <mkdir dir="${reports.raw.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${jar.dir}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}"/>
+            </manifest>
+            <zipgroupfileset dir="${lib.dir}" includes="*.jar"/>
+        </jar>
+    </target>
+
+    <target name="run" depends="jar">
+        <java jar="${jar.dir}/${ant.project.name}.jar" fork="true"/>
+    </target>
+
+    <target name="clean-build" depends="clean,jar"/>
+
+    <target name="main" depends="clean,run"/>
+
+    <target name="run-tests">
+        <junit printsummary="yes" haltonfailure="no" showoutput="no">
+            <classpath>
+                <pathelement path="${build.dir}"/>
+                <pathelement location="${classes.dir}"/>
+                <fileset dir="lib">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+
+            <batchtest fork="yes" todir="${reports.raw.dir}">
+                <formatter type="xml"/>
+                <fileset dir="${src.dir}">
+                    <include name="**/*Test*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+        <junitreport todir="${reports.dir}">
+            <fileset dir="${reports.raw.dir}">
+                <include name="TEST-*.xml"/>
+            </fileset>
+            <report format="frames" todir="${reports.html.dir}"/>
+        </junitreport>
+    </target>
+
+    <target name="test" depends="run-tests">
+    </target>
+</project>

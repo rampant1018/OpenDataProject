@@ -15,7 +15,7 @@ import java.util.Map;
 import org.json.*;
 
 public class Parser {
-	List<Map<String, String>> eventList = new ArrayList();;
+	 static List<Map<String, String>> eventList = new ArrayList<Map<String, String>>();;
 	
 	// Parser test function
 	// Used for testing readFile function which can read json content from given file
@@ -26,9 +26,9 @@ public class Parser {
 			String content = readFile("testfile/query", StandardCharsets.UTF_8);
 			getEventList(content);
 			
-			for(int i = 0; i < eventList.size(); i++) {
-				System.out.println("震度： " + eventList.get(i).get("mag") + ", 地點： " + eventList.get(i).get("location") + ", 時間： " + eventList.get(i).get("time") + ", 經度： " + eventList.get(i).get("longitude") + ", 緯度： " + eventList.get(i).get("latitude"));
-			}
+			for(Map<String, String> event : eventList) {
+				System.out.println("震度： " + event.get("mag") + ", 地點： " + event.get("location") + ", 時間： " + event.get("time") + ", 經度： " + event.get("longitude") + ", 緯度： " + event.get("latitude"));
+			};
 			
 		} catch (IOException | JSONException e) {
 			// TODO Auto-generated catch block
@@ -44,9 +44,10 @@ public class Parser {
 		try {
 			getEventList(content);
 			
-			for(int i = 0; i < eventList.size(); i++) {
-				System.out.println("震度： " + eventList.get(i).get("mag") + ", 地點： " + eventList.get(i).get("location") + ", 時間： " + eventList.get(i).get("time") + ", 經度： " + eventList.get(i).get("longitude") + ", 緯度： " + eventList.get(i).get("latitude"));
-			}
+			for(Map<String, String> event : eventList) {
+				System.out.println("震度： " + event.get("mag") + ", 地點： " + event.get("location") + ", 時間： " + event.get("time") + ", 經度： " + event.get("longitude") + ", 緯度： " + event.get("latitude"));
+			};
+			
 			
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
@@ -65,10 +66,9 @@ public class Parser {
 		JSONObject jsonObj = new JSONObject(new JSONTokener(content));
 		JSONArray eventArray = jsonObj.getJSONArray("features");
 		
-		for(int i = 0; i < eventArray.length(); i++) {
-			JSONObject event = eventArray.getJSONObject(i);
+		for(JSONObject event : new IterableJSONArray(eventArray)){
 			
-			Double mag, longitude, latitude;
+        	Double mag, longitude, latitude;
 			Long time;
 			String location;
 			mag = event.getJSONObject("properties").getDouble("mag");
@@ -86,5 +86,32 @@ public class Parser {
 			
 			eventList.add(eventDetail);
 		}
+		
 	}
+	/*
+	public static void foreach(Iterable<JSONObject> iterable) throws JSONException {
+        Iterator<JSONObject> iterator = iterable.iterator();
+        while(iterator.hasNext()) {
+        	
+        	JSONObject event = iterator.next();
+        	Double mag, longitude, latitude;
+			Long time;
+			String location;
+			mag = event.getJSONObject("properties").getDouble("mag");
+			location = event.getJSONObject("properties").getString("place");
+			time = event.getJSONObject("properties").getLong("time");
+			longitude = event.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
+			latitude = event.getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
+			
+			HashMap<String, String>eventDetail = new HashMap<String, String>();
+			eventDetail.put("mag", mag.toString());
+			eventDetail.put("location", location);
+			eventDetail.put("time", time.toString());
+			eventDetail.put("longitude", longitude.toString());
+			eventDetail.put("latitude", latitude.toString());
+			
+			eventList.add(eventDetail);
+        }      
+    }*/
+	
 }
