@@ -9,3 +9,4 @@ tmp/
 .settings/
 .loadpath
 OpenProject/build/
+*.jpg
