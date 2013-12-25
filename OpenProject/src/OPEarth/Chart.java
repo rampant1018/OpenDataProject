@@ -52,29 +52,23 @@ public class Chart {
 	
 	public void GenerateMapStat(List<String> longitude, List<String> latitude, ArrayList<Integer> magnitude) throws IOException {
 		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=17.12207,179.39887&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg";
-		
+		String[] tmpURL = {"&markers=size:mid%7Ccolor:green", "&markers=size:mid%7Ccolor:blue", "&markers=icon:http://ppt.cc/ccLo"};
 		for(int i = 0; i < longitude.size(); i++) {		
 			
 			switch(magnitude.get(i)){
 				case 3:
-					generateURL += "&markers=size:mid%7Ccolor:green%7C";
+					tmpURL[0] += "%7C"+longitude.get(i)+","+latitude.get(i);
 					break;
 				case 4:
-					generateURL += "&markers=size:mid%7Ccolor:blue%7C";
+					tmpURL[1] += "%7C"+longitude.get(i)+","+latitude.get(i);
 					break;
 				case 5:
-					generateURL += "&markers=icon:http://ppt.cc/ccLo%7C";
+					tmpURL[2] += "%7C"+longitude.get(i)+","+latitude.get(i);
 					break;
 				default:
-			}	
-			
-			generateURL += longitude.get(i);
-			generateURL += ",";
-			generateURL += latitude.get(i);
-			
-			
+			}				
 		}
-		
+		generateURL += tmpURL[0]+tmpURL[1]+tmpURL[2];
 		URL url = new URL(generateURL);
 		System.out.println(url.toString());
 		Image image = ImageIO.read(url);
