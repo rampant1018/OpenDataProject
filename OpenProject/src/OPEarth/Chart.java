@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -49,19 +50,33 @@ public class Chart {
 		}
 	}
 	
-	public void GenerateMapStat(List<String> longitude, List<String> latitude) throws IOException {
-		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=17.12207,179.39887&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg&markers=";
+	public void GenerateMapStat(List<String> longitude, List<String> latitude, ArrayList<Integer> magnitude) throws IOException {
+		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=17.12207,179.39887&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg";
 		
-		for(int i = 0; i < longitude.size(); i++) {
-			if(i != 0) {
-				generateURL += "%7C";
-			}
+		for(int i = 0; i < longitude.size(); i++) {		
+			
+			switch(magnitude.get(i)){
+				case 3:
+					generateURL += "&markers=size:mid%7Ccolor:green%7C";
+					break;
+				case 4:
+					generateURL += "&markers=size:mid%7Ccolor:blue%7C";
+					break;
+				case 5:
+					generateURL += "&markers=icon:http://ppt.cc/ccLo%7C";
+					break;
+				default:
+			}	
+			
 			generateURL += longitude.get(i);
 			generateURL += ",";
 			generateURL += latitude.get(i);
+			
+			
 		}
 		
 		URL url = new URL(generateURL);
+		System.out.println(url.toString());
 		Image image = ImageIO.read(url);
 		ImageIO.write((RenderedImage) image, "jpg", new File("Map.jpg"));
 	}
