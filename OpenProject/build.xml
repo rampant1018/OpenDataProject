@@ -47,7 +47,7 @@
 
     <target name="main" depends="clean,run"/>
 
-    <target name="run-tests">
+    <target name="run-tests" depends="jar">
         <junit printsummary="yes" haltonfailure="no" showoutput="no">
             <classpath>
                 <pathelement path="${build.dir}"/>
