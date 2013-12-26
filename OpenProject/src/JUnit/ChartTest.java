@@ -31,6 +31,7 @@ public class ChartTest {
 
 	@Test
 	public void testGenTimeSeriesChart() {
+		boolean successful = true;
 		Map<Date, Integer> map = new HashMap<Date, Integer>();
     	map.put(new Date(1356998400000L), 520);
     	map.put(new Date(1359676800000L), 129);
@@ -46,11 +47,15 @@ public class ChartTest {
     	}  catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			successful = false;
 		}
+    	
+    	assertEquals(true, successful);
 	}
 	
 	@Test
 	public void testGenMapStat() {
+		boolean successful = true;
 		List<String> longitude = new ArrayList<String>();
     	List<String> latitude = new ArrayList<String>();
     	ArrayList<Integer> magnitude = new ArrayList<Integer>();
@@ -78,6 +83,9 @@ public class ChartTest {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			successful = false;
 		}
+    	
+    	assertEquals(true, successful);
 	}
 }
