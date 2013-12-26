@@ -1,18 +1,12 @@
 package OPEarth;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +18,6 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
-import org.omg.CORBA_2_3.portable.OutputStream;
 
 public class Chart {
 	public void GenerateTimeSeriesChart(Map<Date, Integer> statData) {
