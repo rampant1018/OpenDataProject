@@ -20,11 +20,10 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public class Chart {
-	public void GenerateTimeSeriesChart(Map<Date, Integer> statData) {
+	public void GenerateTimeSeriesChart(Map<Date, Integer> statData) throws IOException {
 		TimeSeries earthquakes = new TimeSeries("Earthquakes", Month.class);
 		
 		for(Date key : statData.keySet()) {
-			System.out.println(key + " : "  + statData.get(key));
 			earthquakes.add(new Month(key), statData.get(key));
 		}
 		
@@ -36,11 +35,7 @@ public class Chart {
 				"Count", 
 				dataset);
 		
-		try {
-			ChartUtilities.saveChartAsJPEG(new File("chart.jpg"), chart, 800, 500);
-		} catch(IOException e) {
-			System.err.println("Problem occurres creating chart.");
-		}
+		ChartUtilities.saveChartAsJPEG(new File("chart.jpg"), chart, 800, 500);
 	}
 	
 	public void GenerateMapStat(List<String> longitude, List<String> latitude, ArrayList<Integer> magnitude) throws IOException {
@@ -63,7 +58,6 @@ public class Chart {
 		}
 		generateURL += tmpURL[0]+tmpURL[1]+tmpURL[2];
 		URL url = new URL(generateURL);
-		System.out.println(url.toString());
 		Image image = ImageIO.read(url);
 		ImageIO.write((RenderedImage) image, "jpg", new File("Map.jpg"));
 	}
