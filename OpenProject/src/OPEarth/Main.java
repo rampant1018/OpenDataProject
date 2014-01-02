@@ -17,8 +17,12 @@ public class Main {
                 Parser parser = ProjectFactory.getParser();
                 parser.test();
                 */
+        	List<Map<String, String>> eventList;
         	
-        		System.out.println("Main Thread");
+        	System.out.println("Main Thread");
+        	Parser parser = ProjectFactory.getParser();
+        	eventList = parser.parse();
+        	
         }
         
         
