@@ -38,7 +38,7 @@ public class ChartTest {
     	map.put(new Date(1362096000000L), 3029);
     	map.put(new Date(1364774400000L), 2039);
     	map.put(new Date(1370044800000L), 11);
-    	map.put(new Date(1372636800000L), 2249);
+    	map.put(new Date(1372636800000L), 324);
     	map.put(new Date(1375315200000L), 35);
     	map.put(new Date(1377993600000L), 600);
     	
