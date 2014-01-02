@@ -13,14 +13,10 @@ public class Main {
          */
         public static void main(String[] args) {
                 // TODO Auto-generated method stub
-        	/*
+        	
                 Parser parser = ProjectFactory.getParser();
                 parser.test();
-                */
-        	
-        	PostgreSQL database = new PostgreSQL();
-        	
-        	database.InsertData((float)5.5, (float)3.3, (float)1.1, new Date(1356998400000L), "Testtest");
+                
         }
         
         
