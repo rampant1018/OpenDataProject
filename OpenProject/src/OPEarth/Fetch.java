@@ -1,42 +1,39 @@
 package OPEarth;
-//import library
+
 import java.net.*;
 import java.io.*;
 
-//Fetch class
 public class Fetch {
+	/**
+	 * URL download packet size
+	 */
+	static final int chunksize = 4096;
 	
-	/*
-	 * fetch web information and create json file
-	 * argument: input the time interval for information
+	/** Get geojson data from USGS
+	 * 
+	 * @param startTime specified the start time of earthquake info
+	 * @param endTime specified the end time of earthquake info
+	 * @return geojson data with String format
 	 */
 	public static String getJson(String startTime, String endTime){
-		
-		//information packet size
-		int chunksize = 4096;
         byte[] chunk = new byte[chunksize];
-		//receive string
-		String rcv = "";
-		//the size of read from bufferedinputstream 
-        int count;
-        //try to do get information from URL
+        int count; // data size
+
+		String rcv = ""; 
         try {    
-        	//send request to URL and get return information
         	URL pageUrl = new URL("http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson&&minlatitude=-55&maxlatitude=65&minlongitude=90&maxlongitude=325");
-            //get information from openStream
         	BufferedInputStream bis = new BufferedInputStream(pageUrl.openStream());
-        	//read information per 4096 size and add to string variable "rcv"
+        	// read information per 4096(predefined) size and add to string variable "rcv"
             while ((count = bis.read(chunk, 0, chunksize)) != -1) {
                 rcv += new String(chunk, 0,count);
             }
-            //close bufferedinputstream
-            bis.close();
+
+            bis.close(); // close bufferedinputstream
         }
-        //exception catcher
         catch (IOException e) {
              e.printStackTrace();
         }
-        //return string variable "rcv"
+        
 		return rcv;
 	}	
 }
