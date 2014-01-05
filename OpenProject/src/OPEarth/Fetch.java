@@ -22,7 +22,7 @@ public class Fetch {
         //try to do get information from URL
         try {    
         	//send request to URL and get return information
-        	URL pageUrl = new URL("http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson");
+        	URL pageUrl = new URL("http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson&&minlatitude=-55&maxlatitude=65&minlongitude=90&maxlongitude=325");
             //get information from openStream
         	BufferedInputStream bis = new BufferedInputStream(pageUrl.openStream());
         	//read information per 4096 size and add to string variable "rcv"
