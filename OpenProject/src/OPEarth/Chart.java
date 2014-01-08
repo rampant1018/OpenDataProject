@@ -46,7 +46,7 @@ public class Chart {
 	public void GenerateMap(List<Integer> longitude, List<Integer> latitude, List<Integer> magnitude) throws IOException {
 		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=20,-170&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg";
 		URL url = new URL(generateURL);
-		BufferedImage image = ImageIO.read(url);
+		BufferedImage image = ImageIO.read(new File("origin_map.jpg"));
 		Graphics2D g = image.createGraphics();
 		
 		for(int i = 0; i < longitude.size(); i++) {		
@@ -83,6 +83,6 @@ public class Chart {
 			}				
 		}
 		
-		ImageIO.write((RenderedImage) image, "jpg", new File("Map2.jpg"));
+		ImageIO.write((RenderedImage) image, "jpg", new File("stat_map.jpg"));
 	}
 }
