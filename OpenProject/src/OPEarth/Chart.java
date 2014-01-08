@@ -1,6 +1,9 @@
 package OPEarth;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
@@ -18,47 +21,68 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.time.Year;
 
 public class Chart {
-	public void GenerateTimeSeriesChart(Map<Date, Integer> statData) throws IOException {
-		TimeSeries earthquakes = new TimeSeries("Earthquakes", Month.class);
+	public void GenerateTimeSeriesChart(Map<Year, Integer> statData) throws IOException {
+		TimeSeries earthquakes = new TimeSeries("Earthquakes", Year.class);
 		
-		for(Date key : statData.keySet()) {
-			earthquakes.add(new Month(key), statData.get(key));
+		for(Year key : statData.keySet()) {
+			earthquakes.add(key, statData.get(key));
+			System.out.println(statData.get(key) + " " + key);
 		}
 		
 		TimeSeriesCollection dataset = new TimeSeriesCollection();
 		dataset.addSeries(earthquakes);
 		JFreeChart chart = ChartFactory.createTimeSeriesChart(
 				"Earthquake Stats", 
-				"Month", 
+				"Year", 
 				"Count", 
 				dataset);
 		
 		ChartUtilities.saveChartAsJPEG(new File("chart.jpg"), chart, 800, 500);
 	}
 	
-	public void GenerateMapStat(List<String> longitude, List<String> latitude, ArrayList<Integer> magnitude) throws IOException {
-		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=17.12207,179.39887&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg";
-		String[] tmpURL = {"&markers=size:mid%7Ccolor:green", "&markers=size:mid%7Ccolor:blue", "&markers=icon:http://ppt.cc/ccLo"};
+	public void GenerateMap(List<Integer> longitude, List<Integer> latitude, List<Integer> magnitude) throws IOException {
+		String generateURL = "http://maps.googleapis.com/maps/api/staticmap?center=20,-170&zoom=2&size=640x640&sensor=false&maptype=satellite&format=jpg";
+		URL url = new URL(generateURL);
+		BufferedImage image = ImageIO.read(url);
+		Graphics2D g = image.createGraphics();
+		
 		for(int i = 0; i < longitude.size(); i++) {		
+			int tmpLon, tmpLat;
+			tmpLon = longitude.get(i) > 0 ? longitude.get(i) - 70 : (360 + longitude.get(i) - 70);
+			tmpLat = 110 - latitude.get(i);
 			
 			switch(magnitude.get(i)){
+				case 0:
+				case 1:
+				case 2:
 				case 3:
-					tmpURL[0] += "%7C"+longitude.get(i)+","+latitude.get(i);
+					//g.setPaint(new Color(0, 0, 0));
 					break;
 				case 4:
-					tmpURL[1] += "%7C"+longitude.get(i)+","+latitude.get(i);
+					g.setPaint(new Color(0, 0, 255));
+					g.fillOval((int)((float)tmpLon / 240.0f * 640.0f), (int)((float)tmpLat / 180.0f * 640.0f), 5, 5);
 					break;
 				case 5:
-					tmpURL[2] += "%7C"+longitude.get(i)+","+latitude.get(i);
+					g.setPaint(new Color(255, 0, 0));
+					g.fillOval((int)((float)tmpLon / 240.0f * 640.0f), (int)((float)tmpLat / 180.0f * 640.0f), 5, 5);
+					break;
+				case 6:
+					g.setPaint(new Color(0, 255, 0));
+					g.fillOval((int)((float)tmpLon / 240.0f * 640.0f), (int)((float)tmpLat / 180.0f * 640.0f), 5, 5);
+					break;
+				case 7:
+				case 8:
+				case 9:
+					g.setPaint(new Color(255, 255, 255));
+					g.fillOval((int)((float)tmpLon / 240.0f * 640.0f), (int)((float)tmpLat / 180.0f * 640.0f), 5, 5);
 					break;
 				default:
 			}				
 		}
-		generateURL += tmpURL[0]+tmpURL[1]+tmpURL[2];
-		URL url = new URL(generateURL);
-		Image image = ImageIO.read(url);
-		ImageIO.write((RenderedImage) image, "jpg", new File("Map.jpg"));
+		
+		ImageIO.write((RenderedImage) image, "jpg", new File("Map2.jpg"));
 	}
 }
