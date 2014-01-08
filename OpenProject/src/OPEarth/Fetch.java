@@ -1,7 +1,6 @@
 package OPEarth;
 
 import java.net.*;
-import java.nio.charset.Charset;
 import java.io.*;
 
 public class Fetch {
@@ -16,7 +15,7 @@ public class Fetch {
 	 * @param endTime specified the end time of earthquake info
 	 * @return geojson data with String format
 	 */
-	public static String getJson(String startTime, String endTime){
+	public String getJson(String startTime, String endTime){
         byte[] chunk = new byte[chunksize];
         int count; // data size
 

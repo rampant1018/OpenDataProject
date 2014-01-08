@@ -1,10 +1,8 @@
 package OPEarth;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +18,9 @@ import java.sql.Statement;
 public class PostgreSQL {
 	Connection con;
 	
+	/**
+	 * Call this function before access database
+	 */
 	public void Connect() {
 		// Connection settings
 		String url="jdbc:postgresql://210.61.10.89:9999/Team2";
@@ -34,6 +35,9 @@ public class PostgreSQL {
 		}
 	}
 	
+	/**
+	 * Call this function after done all database access
+	 */
 	public void DisConnect() {
 		try {
 			con.close();
@@ -78,6 +82,10 @@ public class PostgreSQL {
 		}
 	}
 	
+	/**
+	 * Used to send query to database and get the earthquakes information
+	 * @return a list contain all the earthquakes information with entry format
+	 */
 	public List<Entry> getEntryList() {
 		String sql;
 		List<Entry> entryList = new ArrayList<Entry>();
@@ -139,10 +147,8 @@ public class PostgreSQL {
 		return resultTime;
 	}
 
-	/** Earthquake info data format. Contain 'longitude', 'latitude', 'magnitude', 'time', 'location'
-	 * 
-	 * @author rampant
-	 *
+	/** 
+	 * Earthquake info data format. Contain 'longitude', 'latitude', 'magnitude', 'time', 'location'
 	 */
 	public class Entry {
 		float longitude;

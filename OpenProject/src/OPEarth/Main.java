@@ -1,21 +1,15 @@
 package OPEarth;
 
 import java.io.IOException;
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.jfree.data.time.Month;
 import org.jfree.data.time.Year;
 import org.json.JSONException;
-
-import OPEarth.PostgreSQL.Entry;
 
 public class Main {
         /**
@@ -25,12 +19,16 @@ public class Main {
             // TODO Auto-generated method stub
         	System.out.println("Main Thread");
 
+        	// Get object instance
         	Fetch fetch = ProjectFactory.getFetch();
         	Parser parser = ProjectFactory.getParser();
         	Chart chart = ProjectFactory.getChart();
         	PostgreSQL database = ProjectFactory.getDatabase();
+        	
+        	// Connection database to server
         	database.Connect();
         	
+        	// Get latest data time from database. Then set the fetcher's start time.
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         	Calendar startDate = Calendar.getInstance();
         	if(database.GetLatestTime() == null) {
@@ -52,6 +50,7 @@ public class Main {
         		System.out.println("Current latest data end at " + formatter.format(startDate.getTime()));
         	}
         	
+        	// Get calendar instance. Used to calculate start time to end time.
         	Calendar endDate = Calendar.getInstance();
         	Calendar current = Calendar.getInstance();
         	current.setTimeInMillis(System.currentTimeMillis());
@@ -69,6 +68,7 @@ public class Main {
 				endDate.set(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), 30);
 				System.out.println(formatter.format(startDate.getTime()) + " ~ " + formatter.format(endDate.getTime()));
 
+				// Parse JSON content and store data to eventList
 				try {
 					eventList = parser.getEventList(fetch.getJson(formatter.format(startDate.getTime()), formatter.format(endDate.getTime())));
 				} catch (JSONException e) {
@@ -76,15 +76,18 @@ public class Main {
 					e.printStackTrace();
 				}
             	    			
+				// Convert earthquake event to entry and store to entryList
             	List<PostgreSQL.Entry> entryList = new ArrayList<PostgreSQL.Entry>();
             	for(Map<String, String> event : eventList) {
         			Calendar cal = Calendar.getInstance();
-        			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         			cal.setTimeInMillis(Long.parseLong(event.get("time")));
             		entryList.add(database.new Entry(Float.parseFloat(event.get("longitude")), Float.parseFloat(event.get("latitude")), Float.parseFloat(event.get("mag")), cal.getTimeInMillis(), event.get("location").replace('\'', '`')));
             	}
+            	
+            	// Insert data to database
             	database.InsertData(entryList);
         		
+            	// Start time increment.
 				if(startDate.get(Calendar.MONTH) != Calendar.DECEMBER) {
 					startDate.add(Calendar.MONTH, 1);
 				}
@@ -92,9 +95,9 @@ public class Main {
 					startDate.add(Calendar.YEAR, 1);
 					startDate.set(Calendar.MONTH, Calendar.JANUARY);
 				}
-
         	}
 
+        	// Get data from database server and store data into entryList and statData.
         	List<Integer> longitude = new ArrayList<Integer>();
     		List<Integer> latitude = new ArrayList<Integer>();
     		List<Integer> magnitude = new ArrayList<Integer>();
@@ -104,7 +107,6 @@ public class Main {
         		Calendar cal = Calendar.getInstance();
         		cal.setTimeInMillis(entry.time);
         		Year tmpYear = new Year(cal.getTime());
-        		System.out.println(entry.longitude + " " + entry.latitude + " " + entry.magnitude + " " + tmpYear + " " + entry.location);
         		if(statData.containsKey(tmpYear)) {
         			int tmp = statData.get(tmpYear);
         			statData.remove(tmpYear);
@@ -118,20 +120,19 @@ public class Main {
         		latitude.add((int)entry.latitude);
         		magnitude.add((int)entry.magnitude);
         	}
+
+        	// Generate chart
         	try {
 				chart.GenerateTimeSeriesChart(statData);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        	try {
-				//chart.GenerateMapStat(longitude, latitude, magnitude);
+				System.out.println("Generate time series chart done.");
 				chart.GenerateMap(longitude, latitude, magnitude);
+				System.out.println("Generate statistics map done.");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
         	
+        	// Disconnect database
         	database.DisConnect();
         }
 }
