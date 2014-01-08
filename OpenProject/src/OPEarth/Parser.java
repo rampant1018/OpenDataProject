@@ -14,52 +14,23 @@ import java.util.Map;
 
 import org.json.*;
 
-public class Parser {
-	 private List<Map<String, String>> eventList = new ArrayList<Map<String, String>>();
-	
-	 public List<Map<String, String>> parse() {
-		 try {
-				String content = readFile("testfile/query", StandardCharsets.UTF_8);
-				getEventList(content);
-			} catch (IOException | JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-		}
-		 
-		 return eventList;
-	 }
-	 
+public class Parser { 
 	// Parser test function
 	// Used for testing readFile function which can read json content from given file
 	// And call getEventList function to parse json content
 	// Display all event details: mag, location, time, longitude, latitude
 	public void test() {
+		List<Map<String, String>> eventList = new ArrayList<Map<String, String>>();
+		
 		try {
 			String content = readFile("testfile/query", StandardCharsets.UTF_8);
-			getEventList(content);
+			eventList = getEventList(content);
 			
 			for(Map<String, String> event : eventList) {
 				System.out.println("震度： " + event.get("mag") + ", 地點： " + event.get("location") + ", 時間： " + event.get("time") + ", 經度： " + event.get("longitude") + ", 緯度： " + event.get("latitude"));
 			};
 			
 		} catch (IOException | JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	// Parser test function
-	// Liked upper test function, but use given json string instead read from testfile
-	// And call getEventList function to parse json content
-	// Display all event details: mag, location, time, longitude, latitude
-	public void test(String content) {
-		try {
-			getEventList(content);
-			
-			for(Map<String, String> event : eventList) {
-				System.out.println("震度： " + event.get("mag") + ", 地點： " + event.get("location") + ", 時間： " + event.get("time") + ", 經度： " + event.get("longitude") + ", 緯度： " + event.get("latitude"));
-			};
-		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -72,17 +43,37 @@ public class Parser {
 	}
 	
 	// parse json content to get event detail
-	private void getEventList(String content) throws JSONException {
+	public List<Map<String, String>> getEventList(String content) throws JSONException {
+		List<Map<String, String>> eventList = new ArrayList<Map<String, String>>();
 		JSONObject jsonObj = new JSONObject(new JSONTokener(content));
 		JSONArray eventArray = jsonObj.getJSONArray("features");
 		
 		for(JSONObject event : new IterableJSONArray(eventArray)){
+			//System.out.println(event.toString());
         	Double mag, longitude, latitude;
 			Long time;
 			String location;
-			mag = event.getJSONObject("properties").getDouble("mag");
-			location = event.getJSONObject("properties").getString("place");
-			time = event.getJSONObject("properties").getLong("time");
+			
+			if(!event.getJSONObject("properties").isNull("mag")) {
+				mag = event.getJSONObject("properties").getDouble("mag");
+			}
+			else {
+				mag = 0d;
+			}
+			
+			if(!event.getJSONObject("properties").isNull("place")) {
+				location = event.getJSONObject("properties").getString("place");
+			}
+			else {
+				location = "";
+			}
+			
+			if(!event.getJSONObject("properties").isNull("time")) {
+				time = event.getJSONObject("properties").getLong("time");
+			}
+			else {
+				time = 0L;
+			}
 			longitude = event.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0);
 			latitude = event.getJSONObject("geometry").getJSONArray("coordinates").getDouble(1);
 			
@@ -95,5 +86,8 @@ public class Parser {
 			
 			eventList.add(eventDetail);
 		}
+		
+		return eventList;
 	}
+	
 }
