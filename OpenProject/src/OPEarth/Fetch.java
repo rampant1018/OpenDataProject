@@ -1,6 +1,7 @@
 package OPEarth;
 
 import java.net.*;
+import java.nio.charset.Charset;
 import java.io.*;
 
 public class Fetch {
@@ -19,20 +20,24 @@ public class Fetch {
         byte[] chunk = new byte[chunksize];
         int count; // data size
 
-		String rcv = ""; 
-        try {    
-        	URL pageUrl = new URL("http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson&&minlatitude=-55&maxlatitude=65&minlongitude=90&maxlongitude=325");
-        	BufferedInputStream bis = new BufferedInputStream(pageUrl.openStream());
-        	// read information per 4096(predefined) size and add to string variable "rcv"
-            while ((count = bis.read(chunk, 0, chunksize)) != -1) {
-                rcv += new String(chunk, 0,count);
-            }
-
-            bis.close(); // close bufferedinputstream
-        }
-        catch (IOException e) {
-             e.printStackTrace();
-        }
+		String rcv = "";
+		boolean finished = false;
+		while(!finished) {
+	        try {
+	        	URL pageUrl = new URL("http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime="+startTime+"&endtime="+endTime+"&format=geojson&minlatitude=-70&maxlatitude=80&minlongitude=75&maxlongitude=325");
+	        	BufferedInputStream bis = new BufferedInputStream(pageUrl.openStream());
+	        	// read information per 4096(predefined) size and add to string variable "rcv"
+	            while ((count = bis.read(chunk, 0, chunksize)) != -1) {
+	                rcv += new String(chunk, 0,count);
+	            }
+	
+	            bis.close(); // close bufferedinputstream*/
+	            finished = true;
+	        }
+	        catch (IOException e) {
+	             e.printStackTrace();
+	        }
+		}
         
 		return rcv;
 	}	
