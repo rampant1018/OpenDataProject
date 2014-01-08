@@ -1,12 +1,6 @@
 package JUnit;
 
-import static org.junit.Assert.assertEquals;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -14,7 +8,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import OPEarth.PostgreSQL;
-import OPEarth.PostgreSQL.Entry;
 
 public class PostgreSQLTest {
 	PostgreSQL database;

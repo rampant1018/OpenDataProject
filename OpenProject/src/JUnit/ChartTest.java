@@ -3,13 +3,9 @@ package JUnit;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.jfree.data.time.Month;
 import org.jfree.data.time.Year;
 import org.junit.After;
 import org.junit.Before;
